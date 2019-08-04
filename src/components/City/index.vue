@@ -1,24 +1,32 @@
 <template>
   <div class="city_body">
     <div class="city_list">
-      <div class="city_hot">
-        <h2>热门城市</h2>
-        <ul class="clearfix">
-          <li v-for="item in hotList" :key="item.id">{{item.nm}}</li>
-        </ul>
-      </div>
-      <div class="city_sort" ref="city_sort">
-        <div v-for="item in cityList" :key="item.index">
-          <h2>{{item.index}}</h2>
-          <ul>
-            <li v-for="itemList in item.list" :key="itemList.id">{{itemList.nm}}</li>
-          </ul>
+      <Scroller ref="city_list">
+        <div>
+          <div class="city_hot">
+            <h2>热门城市</h2>
+            <ul class="clearfix">
+              <li v-for="item in hotList" :key="item.id">{{item.nm}}</li>
+            </ul>
+          </div>
+          <div class="city_sort" ref="city_sort">
+            <div v-for="item in cityList" :key="item.index">
+              <h2>{{item.index}}</h2>
+              <ul>
+                <li v-for="itemList in item.list" :key="itemList.id">{{itemList.nm}}</li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
+      </Scroller>
     </div>
     <div class="city_index">
       <ul>
-        <li v-for="(item,index) in cityList" :key="item.index" @touchstart="handleToIndex(index)">{{item.index}}</li>
+        <li
+          v-for="(item,index) in cityList"
+          :key="item.index"
+          @touchstart="handleToIndex(index)"
+        >{{item.index}}</li>
       </ul>
     </div>
   </div>
@@ -103,11 +111,13 @@ export default {
       };
     },
     //点击索引跳转到相应位置的方法
-    handleToIndex(index){
+    handleToIndex(index) {
       //获取h2元素
-      var h2 = this.$refs.city_sort.getElementsByTagName('h2');
+      var h2 = this.$refs.city_sort.getElementsByTagName("h2");
       //设置滚动的位置
-      this.$refs.city_sort.parentNode.scrollTop=h2[index].offsetTop;
+      // this.$refs.city_sort.parentNode.scrollTop = h2[index].offsetTop;
+      //h2[index].offsetTop作为参数y传入  加-号是为了向下滚动
+      this.$refs.city_list.toScrollTop(-h2[index].offsetTop);
     }
   }
 };

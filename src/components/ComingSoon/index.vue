@@ -1,5 +1,6 @@
 <template>
   <div class="movie_body">
+     <Scroller>
     <ul>
       <!-- <li>
 						<div class="pic_show"><img src="/images/movie_1.jpg"></div>
@@ -28,6 +29,7 @@
         <div class="btn_pre">预售</div>
       </li>
     </ul>
+     </Scroller>
   </div>
 </template>
 
