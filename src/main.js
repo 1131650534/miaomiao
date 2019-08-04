@@ -3,8 +3,16 @@ import App from './App.vue'
 import router from './routers'
 import store from './stores'
 
-Vue.config.productionTip = false
+import axios from 'axios'
+Vue.prototype.axios = axios;
 
+
+// 替换接口图片地址的w.h 的过滤器
+Vue.filter('setWH',(url,arg)=>{
+  return url.replace(/w\.h/,arg);
+});
+
+Vue.config.productionTip = false
 new Vue({
   router,
   store,

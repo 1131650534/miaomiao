@@ -14,6 +14,10 @@ export default new Router({
     movieRouter,
     cnimaRouter,
     mineRouter,
-    
+    // 重定向 让什么都不匹配时  现实movie
+    {
+      path:'/*',
+      redirect:'/movie'
+    }
   ]
 })

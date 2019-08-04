@@ -1,12 +1,24 @@
 <template>
-    <div>
-        holle Mine
+     <div id="main">
+        <Header  title="我的喵喵"/>
+        <div id="content">
+            <Login/>
+        </div>
+        <TabBar />
     </div>
 </template>
 
 <script>
+import Header from '@/components/header'
+import TabBar from '@/components/TabBar'
+import Login from '@/components/Login'
 export default {
-
+    name:'Mine',
+     components:{
+        Header,
+        TabBar,
+        Login
+    }
 }
 </script>
 
