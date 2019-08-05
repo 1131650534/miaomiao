@@ -1,6 +1,7 @@
 <template>
   <div class="movie_body" ref="movie_body">
-    <Scroller :handleToScroll="handleToScroll" :handleToTouchEnd="handleToTouchEnd">
+    <Loading v-if="isLoading" />
+    <Scroller v-else :handleToScroll="handleToScroll" :handleToTouchEnd="handleToTouchEnd">
       <ul>
         <!-- <li>
         <div class="pic_show">
@@ -48,7 +49,8 @@ export default {
   data() {
     return {
       movieList: [],
-      PullDownMsg: ""
+      PullDownMsg: "",
+      isLoading: true
     };
   },
   mounted() {
@@ -56,6 +58,8 @@ export default {
       var msg = res.data.msg;
       if (msg === "ok") {
         this.movieList = res.data.data.movieList;
+        //数据加载完成之后 加载logo消失
+        this.isLoading = false;
         // this.$nextTick是vue提供的 数据渲染完毕以后触发
         // this.$nextTick(() => {
         //   //两个参数 第一个 在外面包裹的容器的DOM元素 第二个 配置对象

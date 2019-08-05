@@ -1,6 +1,7 @@
 <template>
   <div class="cinema_body">
-    <Scroller>
+    <Loading v-if="isLoading" />
+    <Scroller v-else>
     <ul>
       <!-- <li>
         <div>
@@ -43,13 +44,15 @@ export default {
   name: "Cilist",
   data() {
     return {
-      cnimaList:[]
+      cnimaList:[],
+      isLoading:true
     };
   },
   mounted(){
     this.axios.get('/api/cinemaList?cityId=10').then((res)=>{
       var msg=res.data.msg;
       if(msg==='ok'){
+        this.isLoading=false
         this.cnimaList=res.data.data.cinemas
       }
     })

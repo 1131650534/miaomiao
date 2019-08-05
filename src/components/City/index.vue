@@ -1,19 +1,20 @@
 <template>
   <div class="city_body">
-    <div class="city_list">
+    <Loading v-if="isLoading" />
+    <div class="city_list" v-else>
       <Scroller ref="city_list">
         <div>
           <div class="city_hot">
             <h2>热门城市</h2>
             <ul class="clearfix">
-              <li v-for="item in hotList" :key="item.id">{{item.nm}}</li>
+              <li v-for="item in hotList" :key="item.id" @tap="handleToCity(item.nm,item.id)">{{item.nm}}</li>
             </ul>
           </div>
           <div class="city_sort" ref="city_sort">
             <div v-for="item in cityList" :key="item.index">
               <h2>{{item.index}}</h2>
               <ul>
-                <li v-for="itemList in item.list" :key="itemList.id">{{itemList.nm}}</li>
+                <li v-for="itemList in item.list" :key="itemList.id" @tap="handleToCity(itemList.nm,itemList.id)" >{{itemList.nm}}</li>
               </ul>
             </div>
           </div>
@@ -38,13 +39,24 @@ export default {
   data() {
     return {
       cityList: [],
-      hotList: []
+      hotList: [],
+      isLoading:true
     };
   },
   mounted() {
+    // 获取本地存储
+    var cityList=window.localStorage.getItem('cityList');
+    var hotList=window.localStorage.getItem('hotList');
+    if(cityList&&hotList){
+      //将字符串解析回来
+      this.cityList=JSON.parse(cityList);
+      this.hotList=JSON.parse(hotList);
+      this.isLoading=false;
+    }else{
     this.axios.get("/api/cityList").then(res => {
       var msg = res.data.msg;
       if (msg === "ok") {
+        this.isLoading=false;
         var cities = res.data.data.cities;
         //转换数据格式
         // [{index:'A',list:[{nm:"阿城",id:123}]}]
@@ -52,8 +64,13 @@ export default {
         this.cityList = cityList;
         this.hotList = hotList;
         // console.log(this.hotList)
+        //对请求的城市列表 进行本地存储
+        // JSON.stringify(cityList)将cityList数组转换成字符串形式
+        window.localStorage.setItem('cityList',JSON.stringify(cityList));
+        window.localStorage.setItem('hotList',JSON.stringify(hotList));
       }
     });
+  }
   },
   methods: {
     formatCityList(cities) {
@@ -118,6 +135,10 @@ export default {
       // this.$refs.city_sort.parentNode.scrollTop = h2[index].offsetTop;
       //h2[index].offsetTop作为参数y传入  加-号是为了向下滚动
       this.$refs.city_list.toScrollTop(-h2[index].offsetTop);
+    },
+    handleToCity(nm,id){
+      this.$store.commit('city/CITY_INFO',{nm,id})
+      this.$router.push('./movie/nowPlaying')
     }
   }
 };
