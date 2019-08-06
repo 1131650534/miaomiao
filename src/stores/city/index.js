@@ -1,7 +1,7 @@
 // 定义状态
 const state = {
-    nm: '北京',
-    id: 1
+    nm:  window.localStorage.getItem('nowNm')||'北京',
+    id: window.localStorage.getItem('nowId')||1
 };
 
 const actions = {

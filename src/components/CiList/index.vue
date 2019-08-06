@@ -45,15 +45,23 @@ export default {
   data() {
     return {
       cnimaList:[],
-      isLoading:true
+      isLoading:true,
+      prevCityId:-1
     };
   },
-  mounted(){
-    this.axios.get('/api/cinemaList?cityId=10').then((res)=>{
+  activated(){
+     //注意：mounted生命周期函数里面的 如果有缓存 就不会二次触发 所以这里选用activated
+    //注意一个小细节 切换城市 需要重新请求 其他的不用 因为有缓存
+    var cityId = this.$store.state.city.id;
+    if (this.prevCityId === cityId) {return;} //如果城市id相同 就不执行下面
+    this.isLoading = true;
+    this.axios.get('/api/cinemaList?cityId='+cityId).then((res)=>{
       var msg=res.data.msg;
       if(msg==='ok'){
-        this.isLoading=false
         this.cnimaList=res.data.data.cinemas
+        this.isLoading=false
+        this.prevCityId = cityId;
+        
       }
     })
   },

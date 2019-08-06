@@ -19,6 +19,7 @@
         </keep-alive>
         </div>
         <TabBar />
+        <MessageBox />
     </div>
 </template>
 
@@ -26,11 +27,13 @@
 
 import Header from '@/components/header'
 import TabBar from '@/components/TabBar'
+import MessageBox from '@/components/JS/MessageBox'
 export default {
     name:'Movie',
     components:{
         Header,
-        TabBar
+        TabBar,
+        MessageBox
     }
 }
 </script>

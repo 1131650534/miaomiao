@@ -62,8 +62,9 @@ export default {
     //监听message 输入了什么
     message(newVal) {
       var that=this;
+      var cityId = this.$store.state.city.id;
       this.cancelRequest();
-      this.axios.get("/api/searchList?cityId=10&kw=" + newVal, {
+      this.axios.get('/api/searchList?cityId=10'+cityId+'&kw=' + newVal, {
           cancelToken: new this.axios.CancelToken(function(c) {
             console.log('1111')
             that.source = c;

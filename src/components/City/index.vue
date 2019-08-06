@@ -137,8 +137,12 @@ export default {
       this.$refs.city_list.toScrollTop(-h2[index].offsetTop);
     },
     handleToCity(nm,id){
-      this.$store.commit('city/CITY_INFO',{nm,id})
-      this.$router.push('./movie/nowPlaying')
+      this.$store.commit('city/CITY_INFO',{nm,id});
+      //本地存放上一次选择的城市
+      window.localStorage.setItem('nowNm',nm);
+      window.localStorage.setItem('nowId',id);
+      //利用编程式路由进行跳转
+      this.$router.push('./movie/nowPlaying');
     }
   }
 };
