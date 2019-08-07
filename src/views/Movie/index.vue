@@ -19,7 +19,6 @@
         </keep-alive>
         </div>
         <TabBar />
-        <MessageBox />
     </div>
 </template>
 
@@ -27,13 +26,20 @@
 
 import Header from '@/components/header'
 import TabBar from '@/components/TabBar'
-import MessageBox from '@/components/JS/MessageBox'
+import {messageBox} from '@/components/JS'
 export default {
     name:'Movie',
     components:{
         Header,
         TabBar,
-        MessageBox
+    },
+    mounted(){
+        messageBox({
+            title:'定位',
+            content:'重庆',
+            cancel:'取消',
+            ok:'切换定位'
+        })
     }
 }
 </script>
