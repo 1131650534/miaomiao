@@ -3,8 +3,9 @@
     <h2>{{title}}</h2>
     <p>{{content}}</p>
     <div>
-      <div>{{cancel}}</div>
-      <div>{{ok}}</div>
+      <!-- @touchstart 按下方法 -->
+      <div @touchstart="handleCancel">{{cancel}}</div>
+      <div @touchstart="handleOk">{{ok}}</div>
     </div>
   </div>
 </template>
@@ -16,7 +17,7 @@ export default {
 </script>
 
 <style scoped>
-.messageBox {
+.MessageBox {
   width: 200px;
   height: 120px;
   border: 1px #ccc solid;
@@ -28,29 +29,29 @@ export default {
   top: 50%;
   margin: -60px 0 0 -100px;
 }
-.messageBox h2 {
+.MessageBox h2 {
   text-align: center;
   line-height: 40px;
   font-size: 18px;
 }
-.messageBox p{
+.MessageBox p{
     text-align: center;
     line-height: 40px;
 }
-.messageBox>div{
+.MessageBox>div{
     display:flex;
     position: absolute;
     bottom: 0;
     width: 100%;
     border-top: 1px #ccc solid;
 }
-.messageBox>div div{
+.MessageBox>div div{
     flex: 1;
     text-align: center;
     line-height: 30px;
     border-right: 1px #ccc solid;
 }
-.messageBox>div div:last-child{
+.MessageBox>div div:last-child{
     border:none;
 }
 </style>

@@ -23,23 +23,43 @@
 </template>
 
 <script>
-
 import Header from '@/components/header'
 import TabBar from '@/components/TabBar'
 import {messageBox} from '@/components/JS'
+import { setTimeout } from 'timers';
 export default {
     name:'Movie',
     components:{
         Header,
         TabBar,
-    },
+        
+   },
     mounted(){
-        messageBox({
+        setTimeout(()=>{
+        this.axios.get('/api/getLocation').then((res)=>{
+            var msg=res.data.msg;
+            if(msg==='ok'){
+                var nm =res.data.data.nm;
+                var id =res.data.data.id;
+                //这里两个id的数据类型不一样 需要转换 才能比较 ==会自动转类型
+                if(this.$store.state.city.id==id){return;}
+                messageBox({
             title:'定位',
-            content:'重庆',
+            content:nm,
             cancel:'取消',
-            ok:'切换定位'
+            ok:'切换定位',
+            handleOk(){
+                // 切换城市有两种方法 1.修改本地存储（重新渲染页面）  2.状态管理
+                //改本地存储
+                window.localStorage.setItem('nowNm',nm);
+                window.localStorage.setItem('nowId',id);
+                // 重新渲染页面
+                window.location.reload();
+            },
         })
+            }
+        })
+        },3000)
     }
 }
 </script>
