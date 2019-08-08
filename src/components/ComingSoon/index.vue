@@ -16,11 +16,11 @@
 						</div>
       </li>-->
       <li v-for="item in comingList" :key="item.id">
-        <div class="pic_show">
+        <div class="pic_show" @tap="handleToDetail(item.id)">
            <img :src="item.img | setWH('128.180')" />
         </div>
         <div class="info_list">
-          <h2>{{item.nm}} <img v-if="item.version" src="@/assets/maxs.png"/></h2>
+          <h2>{{item.nm}} <img v-if="item.version" src="@/assets/maxs.png" @tap="handleToDetail(item.id)"/></h2>
           <p>
             <span class="person">{{item.wish}}</span> 人想看
           </p>
@@ -59,7 +59,14 @@ export default {
          this.prevCityId = cityId;
       }
     });
-  }
+  },
+  methods: {
+    handleToDetail(movieId) {
+      // console.log(movieId);
+      //编程式路由
+      this.$router.push('/movie/detail/2/'+movieId);
+    }
+  },
 };
 </script>
 
